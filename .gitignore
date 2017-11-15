@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+# Other
+build
+**/*.kate-swp
+.*/
+*.kdev4
+**/*.zip
+.~lock*
