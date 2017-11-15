@@ -1,5 +1,5 @@
 /*
- * Declares Set - structure to store some unordered unique values
+ * Simple Set - structure to store some unordered unique values
  * Copyright (C) 2017  Mikhail <zomial@yandex.ru>
  * 
  * This program is free software; you can redistribute it and/or modify
@@ -32,6 +32,9 @@ std::ostream& operator << ( std::ostream&, const Set<T>&);
 template <typename T>
 class Set {
     friend std::ostream& operator << <T>( std::ostream&, const Set<T>&);
+private:
+    std::list<T> container;
+
 public:
     Set(){};
     Set(const std::string&){};
@@ -47,8 +50,6 @@ public:
     Set operator & (Set&) const {};
     Set operator | (Set&) const {};
 
-private:
-    std::list<T> container;
 };
 
 template <typename T>
