@@ -47,14 +47,16 @@ public:
     Set(const Set& another):container{another.container} {};
     Set(Set&& another):container{another.container} {};
 
-    Set operator = (const Set& another) {
+    Set& operator = (const Set& another) {
         if (this != &another)
             container = another.container;
+        return *this;
     };
 
-    Set operator = (Set&& another) {
+    Set& operator = (Set&& another) {
         if (this != &another)
             container = another.container;
+        return *this;
     };
     ~Set() {};
 
