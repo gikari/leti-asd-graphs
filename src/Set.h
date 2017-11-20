@@ -27,11 +27,7 @@ template <typename T>
 class Set;
 
 template <typename T>
-std::ostream& operator << ( std::ostream&, const Set<T>&);
-
-template <typename T>
 class Set {
-    friend std::ostream& operator << <T>( std::ostream&, const Set<T>&);
 private:
     std::list<T> container;
 
@@ -115,13 +111,13 @@ public:
         return new_set;
     };
 
+    friend std::ostream& operator << ( std::ostream& os, const Set& set) {
+        for (auto elem : set.container)
+            os << elem;
+        return os;
+    };
+
 };
 
-template <typename T>
-std::ostream& operator << ( std::ostream& os, const Set<T>& set) {
-    for (auto elem : set.container)
-        os << elem;
-    return os;
-};
 
 #endif
