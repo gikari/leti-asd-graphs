@@ -88,6 +88,12 @@ public:
         return new_set;
     };
 
+    Set& operator &= (Set& another) {
+        Set new_set{*this & another};
+        *this = new_set;
+        return *this;
+    }
+
     Set operator | (Set& another) const {
         Set new_set {};
 
@@ -110,6 +116,12 @@ public:
 
         return new_set;
     };
+
+    Set& operator |= (Set& another) {
+        Set new_set{*this | another};
+        *this = new_set;
+        return *this;
+    }
 
     friend std::ostream& operator << ( std::ostream& os, const Set& set) {
         for (auto elem : set.container)
