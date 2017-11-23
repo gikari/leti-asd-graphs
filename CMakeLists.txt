@@ -5,6 +5,6 @@ set(CMAKE_CXX_STANDARD 14)
 #set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_executable(Graphs src/main.cpp)
+add_executable(Graphs src/main.cpp src/Set.h src/Graph.h src/Transversal.h)
 
 install(TARGETS Graphs RUNTIME DESTINATION bin)
