@@ -21,10 +21,14 @@
 #define SET_H
 
 #include <string>
+#include <iostream>
 #include <list>
 
 template <typename T>
 class Set;
+
+template <typename T>
+class SetIterator;
 
 template <typename T>
 class Set {
@@ -32,11 +36,11 @@ private:
     std::list<T> container;
 
 public:
-    Set():container{}{};
+    Set():container{} {};
 
     Set(const std::string& str){
         for (auto ch : str) {
-            add(ch);
+            add_element(T{ch});
         }
     };
 
@@ -57,7 +61,7 @@ public:
     ~Set() {};
 
 
-    void add(T element) {
+    void add_element(T element) {
         if (!contains(element)) {
             container.push_back(element);
         }
@@ -74,6 +78,17 @@ public:
         }
         return false;
     };
+
+    void show() {
+        std::cout << *this << std::endl;
+    }
+
+    std::string to_str() {
+        std::string str{};
+        for (auto elem : container)
+            str += elem;
+        return str;
+    }
 
     Set operator & (Set& another) const {
         Set new_set {};
@@ -107,11 +122,11 @@ public:
             }
 
             if (!is_found) {
-                new_set.add(element_in_this_set);
+                new_set.add_element(element_in_this_set);
             }
         }
         for (auto element_in_another_set : another.container) {
-            new_set.add(element_in_another_set);
+            new_set.add_element(element_in_another_set);
         }
 
         return new_set;
@@ -122,6 +137,9 @@ public:
         *this = new_set;
         return *this;
     }
+
+    template <typename U>
+    friend class Transversal;
 
     friend std::ostream& operator << ( std::ostream& os, const Set& set) {
         for (auto elem : set.container)
