@@ -23,9 +23,15 @@
 #include "Set.h"
 #include "Graph.h"
 #include <vector>
+#include <utility>
+
 
 template <typename T>
 class Transversal {
+private:
+    Graph<T> graph;
+    Set<T> common_set;
+
 public:
     Transversal() = delete;
     Transversal(const Transversal&) = delete;
@@ -33,20 +39,48 @@ public:
     Transversal operator = (const Transversal&) = delete;
     Transversal operator = (Transversal&&) = delete;
 
-    Transversal (const std::vector< Set<T> >&) {};
+    Transversal (const std::vector< Set<T> >& sets) : graph{}, common_set{} {
+        build_superset(sets);
+        build_graph(sets);
+
+    };
     ~Transversal() {};
+
+    void show_common_set() {
+        common_set.show();
+    }
+
+    void show_graph() {
+        graph.show();
+    }
 
     void get_result() {};
 
 private:
-    void build_graph() {};
+    void build_superset(const std::vector< Set<T> >& sets) {
+        for (auto subset : sets) {
+            common_set |= subset;
+        }
+    }
+    void build_graph(const std::vector< Set<T> >& sets) {
+        for (auto subset : sets) {
+            graph.add_edge_from_to(T{subset.to_str()}, T{"END"});
+            for (auto element : subset.container) {
+                graph.add_edge_from_to(T{element}, T{"ss" + subset.to_str()});
+            }
+        }
+        for (auto element : common_set.container) {
+            graph.add_edge_from_to(T{"BEGIN"}, T{element});
+        }
+
+    };
 
     bool has_route_from_start_to_end() const {};
     void build_route() {};
     void change_direction_of_edges() {};
     void remove_start_and_end() {};
 
-    Graph<T> graph;
+
 
 };
 
