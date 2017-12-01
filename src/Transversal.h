@@ -24,6 +24,7 @@
 #include "Graph.h"
 #include <vector>
 #include <utility>
+#include <iostream>
 
 
 template <typename T>
@@ -42,6 +43,8 @@ public:
     Transversal (const std::vector< Set<T> >& sets) : graph{}, common_set{} {
         build_superset(sets);
         build_graph(sets);
+
+        std::cout << has_routes_left() << "\n";
 
     };
     ~Transversal() {};
@@ -75,7 +78,9 @@ private:
 
     };
 
-    bool has_route_from_start_to_end() const {};
+    bool has_routes_left() const {
+        return graph.has_edge_starting_with("BEGIN");
+    };
     void build_route() {};
     void change_direction_of_edges() {};
     void remove_start_and_end() {};
