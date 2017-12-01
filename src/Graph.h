@@ -50,8 +50,17 @@ public:
         add_edge(std::pair<T,T>{from, to});
     }
 
-    void show() {
+    void show() const {
         std::cout << *this << std::endl;
+    }
+
+    bool has_edge_starting_with(T vertex) const {
+        for (auto element : edges) {
+            if (element.first == vertex) {
+                return true;
+            }
+        }
+        return false;
     }
 
     friend std::ostream& operator << ( std::ostream& os, const Graph& graph) {
