@@ -24,7 +24,7 @@
 #include "Graph.h"
 #include <vector>
 #include <utility>
-#include <iostream>
+//#include <iostream>
 
 
 template <typename T>
@@ -44,7 +44,6 @@ public:
         build_superset(sets);
         build_graph(sets);
 
-        std::cout << has_routes_left() << "\n";
 
     };
     ~Transversal() {};
