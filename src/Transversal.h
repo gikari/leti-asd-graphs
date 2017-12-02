@@ -66,7 +66,7 @@ private:
     }
     void build_graph(const std::vector< Set<T> >& sets) {
         for (auto subset : sets) {
-            graph.add_edge_from_to(T{subset.to_str()}, T{"END"});
+            graph.add_edge_from_to(T{"ss" + subset.to_str()}, T{"END"});
             for (auto element : subset.container) {
                 graph.add_edge_from_to(T{element}, T{"ss" + subset.to_str()});
             }
