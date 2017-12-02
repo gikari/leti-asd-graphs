@@ -63,6 +63,18 @@ public:
         return false;
     }
 
+    void change_edge_direction (std::pair<T,T> edge) {
+        for (auto pair : edges) {
+            if (pair == edge) {
+                T first {pair.second};
+                T second {pair.first};
+                remove_edge(pair);
+                add_edge(std::pair<T,T>{first, second});
+                return;
+            }
+        }
+    }
+
     friend std::ostream& operator << ( std::ostream& os, const Graph& graph) {
         for (auto elem : graph.edges)
             os << "{ " << elem.first << ", " << elem.second << " }; \n";

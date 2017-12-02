@@ -55,6 +55,7 @@ public:
 
         build_graph(sets);
 
+        graph.change_edge_direction(std::pair<T,T>{T{"BEGIN"}, T{"1"}});
 
     };
     ~Transversal() {};
