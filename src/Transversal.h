@@ -24,14 +24,20 @@
 #include "Graph.h"
 #include <vector>
 #include <utility>
+#include <stdexcept>
 //#include <iostream>
 
+
+class wrong_input_error : public std::runtime_error {
+public:
+    using runtime_error::runtime_error;
+};
 
 template <typename T>
 class Transversal {
 private:
     Graph<T> graph;
-    Set<T> common_set;
+    Set<T> superset;
 
 public:
     Transversal() = delete;
@@ -40,8 +46,13 @@ public:
     Transversal operator = (const Transversal&) = delete;
     Transversal operator = (Transversal&&) = delete;
 
-    Transversal (const std::vector< Set<T> >& sets) : graph{}, common_set{} {
+    Transversal (const std::vector< Set<T> >& sets) : graph{}, superset{} {
         build_superset(sets);
+
+        if (sets.size() != superset.power()) {
+            throw wrong_input_error{"Transversal cannot be builded"};
+        }
+
         build_graph(sets);
 
 
@@ -49,7 +60,7 @@ public:
     ~Transversal() {};
 
     void show_common_set() {
-        common_set.show();
+        superset.show();
     }
 
     void show_graph() {
@@ -61,7 +72,7 @@ public:
 private:
     void build_superset(const std::vector< Set<T> >& sets) {
         for (auto subset : sets) {
-            common_set |= subset;
+            superset |= subset;
         }
     }
     void build_graph(const std::vector< Set<T> >& sets) {
@@ -71,7 +82,7 @@ private:
                 graph.add_edge_from_to(T{element}, T{"ss" + subset.to_str()});
             }
         }
-        for (auto element : common_set.container) {
+        for (auto element : superset.container) {
             graph.add_edge_from_to(T{"BEGIN"}, T{element});
         }
 

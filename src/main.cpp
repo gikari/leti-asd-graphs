@@ -33,21 +33,26 @@ int main () {
 
         default:
             cerr << "You haven't choose input method!" << endl;
-            throw runtime_error{"Wrong option"};
+            throw std::runtime_error{"Wrong option"};
             break;
     }
-
-    Transversal<string> tr {sets};
 
     for (size_t i = 0; i != sets.size(); ++i) {
         cout << "Set " << i+1 << ": " << sets[i] << endl;
     }
 
-    cout << "Common set: " << endl;
-    tr.show_common_set();
+    try {
+        Transversal <string> tr {sets};
 
-    cout << "Graph: " << endl;
-    tr.show_graph();
+        cout << "Common set: " << endl;
+        tr.show_common_set();
+
+        cout << "Graph: " << endl;
+        tr.show_graph();
+    }
+    catch( wrong_input_error) {
+        cerr << "Impossible to build transversal with these input data!" << endl;
+    }
 
     return 0;
 }

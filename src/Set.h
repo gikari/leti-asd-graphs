@@ -25,12 +25,6 @@
 #include <list>
 
 template <typename T>
-class Set;
-
-template <typename T>
-class SetIterator;
-
-template <typename T>
 class Set {
 private:
     std::list<T> container;
@@ -88,6 +82,10 @@ public:
         for (auto elem : container)
             str += elem;
         return str;
+    }
+
+    int power() const {
+        return container.size();
     }
 
     Set operator & (Set& another) const {

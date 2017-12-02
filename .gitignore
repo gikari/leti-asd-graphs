@@ -38,3 +38,4 @@ build
 *.kdev4
 **/*.zip
 .~lock*
+**/cmake-build-debug
