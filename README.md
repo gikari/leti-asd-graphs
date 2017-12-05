@@ -1,2 +1,2 @@
-# leti-asd-graphs
-Course work, Algorithms and Data Structures, Semester 3.
+# Course work
+Algorithms and Data Structures, Semester 3.
