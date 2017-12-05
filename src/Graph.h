@@ -63,6 +63,37 @@ public:
         return false;
     }
 
+    std::pair<T,T> get_edge_starting_with(T vertex) const {
+        for (auto element : edges) {
+            if (element.first == vertex) {
+                return element;
+            }
+        }
+        throw std::runtime_error{"Edge with start vertex not found!"};
+    }
+
+    std::pair<T,T> get_edge_ending_with(T vertex) const {
+        for (auto element : edges) {
+            if (element.second == vertex) {
+                return element;
+            }
+        }
+        throw std::runtime_error{"Edge with end vertex not found!"};
+    }
+
+    std::vector<std::pair<T,T>> get_edges_starting_with(T vertex) const {
+        std::vector <std::pair<T,T>> next_edges{};
+        for (auto element : edges) {
+            if (element.first == vertex) {
+                next_edges.push_back(element);
+            }
+        }
+        if (next_edges.empty())
+            throw std::runtime_error{"Edges with start vertex not found!"};
+        else
+            return next_edges;
+    }
+
     void change_edge_direction (std::pair<T,T> edge) {
         for (auto pair : edges) {
             if (pair == edge) {

@@ -53,6 +53,9 @@ int main () {
     catch( wrong_input_error) {
         cerr << "Impossible to build transversal with these input data!" << endl;
     }
+    catch(runtime_error) {
+        cerr << "Impossible to build transversal! Unknown error!" << endl;
+    }
 
     return 0;
 }
