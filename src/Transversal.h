@@ -33,6 +33,11 @@ public:
     using runtime_error::runtime_error;
 };
 
+class no_way_in_graph_error : public std::runtime_error {
+public:
+    using runtime_error::runtime_error;
+};
+
 template <typename T>
 class Transversal {
 private:
@@ -56,10 +61,13 @@ public:
         }
 
         build_graph(sets);
-        //show_graph();
+        show_graph();
 
         while (has_routes_left()) {
             build_some_route();
+
+            show_last_route();
+
             change_direction_of_edges();
             remove_start_and_end();
         }
@@ -89,11 +97,18 @@ public:
     };
 
 private:
+    void show_last_route() {
+        for (auto edge : last_route) {
+            std::cout << "[ " << edge.first << ", " << edge.second  << " ]" << std::endl;
+        }
+    };
+
     void build_superset(const std::vector< Set<T> >& sets) {
         for (auto subset : sets) {
             superset |= subset;
         };
     };
+
     void build_graph(const std::vector< Set<T> >& sets) {
         for (auto subset : sets) {
             graph.add_edge_from_to(T{"ss" + subset.to_str()}, T{"END"});
@@ -116,7 +131,7 @@ private:
         for (auto edge : edges) {
             bijection.push_back(std::pair<T,T>{edge.second, edge.first.substr(2)});
         }
-    }
+    };
 
     bool has_routes_left() const {
         return graph.has_edge_ending_with("END");
@@ -129,8 +144,8 @@ private:
         build_route_from(start_edge);
         last_route.push_back(start_edge);
 
-        if (last_route[0].second != "END")
-            throw std::runtime_error{"Cannot build way in graph!"};
+        if (last_route.front().second != "END")
+            throw no_way_in_graph_error{"Cannot build way in graph!"};
     };
 
     bool build_route_from(std::pair<T,T> edge) {
@@ -140,11 +155,11 @@ private:
 
         auto possible_ways = graph.get_edges_starting_with(edge.second);
         for (auto way : possible_ways) {
-            auto has_chance_to_reach_end = build_route_from(way);
-            if (has_chance_to_reach_end ) {
+            auto has_reached_the_end = build_route_from(way);
+            if (has_reached_the_end ) {
                 last_route.push_back(way);
+                return true;
             }
-            return has_chance_to_reach_end;
         }
         return false;
     };

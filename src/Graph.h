@@ -102,10 +102,7 @@ public:
                 next_edges.push_back(element);
             }
         }
-        if (next_edges.empty())
-            throw vertex_not_found_error{"Edges with start vertex not found!"};
-        else
-            return next_edges;
+        return next_edges;
     };
 
     void change_edge_direction (std::pair<T,T> edge) {

@@ -47,8 +47,11 @@ int main () {
         tr.show_graph();
         tr.show_result();
     }
-    catch( wrong_input_error) {
+    catch(wrong_input_error) {
         cerr << "Impossible to build transversal with these input data!" << endl;
+    }
+    catch(no_way_in_graph_error) {
+        cerr << "Impossible to build graph! " << endl;
     }
     catch(runtime_error) {
         cerr << "Impossible to build transversal! Unknown error!" << endl;
