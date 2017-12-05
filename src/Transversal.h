@@ -56,28 +56,32 @@ public:
 
         build_graph(sets);
 
-        //while (has_routes_left()) {
+        while (has_routes_left()) {
             build_some_route();
-        //}
+            change_direction_of_edges();
+        }
     };
+
     ~Transversal() {};
 
     void show_common_set() {
         superset.show();
-    }
+    };
 
     void show_graph() {
         graph.show();
-    }
+    };
 
-    void get_result() {};
+    void get_result() {
+
+    };
 
 private:
     void build_superset(const std::vector< Set<T> >& sets) {
         for (auto subset : sets) {
             superset |= subset;
-        }
-    }
+        };
+    };
     void build_graph(const std::vector< Set<T> >& sets) {
         for (auto subset : sets) {
             graph.add_edge_from_to(T{"ss" + subset.to_str()}, T{"END"});
@@ -125,10 +129,15 @@ private:
             return has_chance_to_reach_end;
         }
         return false;
-    }
+    };
 
-    void change_direction_of_edges() {};
-    void remove_start_and_end() {};
+    void change_direction_of_edges() {
+
+    };
+
+    void remove_start_and_end() {
+
+    };
 
 
 

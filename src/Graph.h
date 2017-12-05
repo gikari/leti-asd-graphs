@@ -48,11 +48,11 @@ public:
 
     void add_edge_from_to(T from, T to) {
         add_edge(std::pair<T,T>{from, to});
-    }
+    };
 
     void show() const {
         std::cout << *this << std::endl;
-    }
+    };
 
     bool has_edge_starting_with(T vertex) const {
         for (auto element : edges) {
@@ -61,7 +61,7 @@ public:
             }
         }
         return false;
-    }
+    };
 
     std::pair<T,T> get_edge_starting_with(T vertex) const {
         for (auto element : edges) {
@@ -70,7 +70,7 @@ public:
             }
         }
         throw std::runtime_error{"Edge with start vertex not found!"};
-    }
+    };
 
     std::pair<T,T> get_edge_ending_with(T vertex) const {
         for (auto element : edges) {
@@ -79,7 +79,7 @@ public:
             }
         }
         throw std::runtime_error{"Edge with end vertex not found!"};
-    }
+    };
 
     std::vector<std::pair<T,T>> get_edges_starting_with(T vertex) const {
         std::vector <std::pair<T,T>> next_edges{};
@@ -92,7 +92,7 @@ public:
             throw std::runtime_error{"Edges with start vertex not found!"};
         else
             return next_edges;
-    }
+    };
 
     void change_edge_direction (std::pair<T,T> edge) {
         for (auto pair : edges) {
@@ -104,7 +104,7 @@ public:
                 return;
             }
         }
-    }
+    };
 
     friend std::ostream& operator << ( std::ostream& os, const Graph& graph) {
         for (auto elem : graph.edges)

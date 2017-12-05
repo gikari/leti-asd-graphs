@@ -75,18 +75,18 @@ public:
 
     void show() {
         std::cout << *this << std::endl;
-    }
+    };
 
     std::string to_str() {
         std::string str{};
         for (auto elem : container)
             str += elem;
         return str;
-    }
+    };
 
     int power() const {
         return container.size();
-    }
+    };
 
     Set operator & (Set& another) const {
         Set new_set {};
@@ -105,7 +105,7 @@ public:
         Set new_set{*this & another};
         *this = new_set;
         return *this;
-    }
+    };
 
     Set operator | (Set& another) const {
         Set new_set {};
@@ -134,7 +134,7 @@ public:
         Set new_set{*this | another};
         *this = new_set;
         return *this;
-    }
+    };
 
     template <typename U>
     friend class Transversal;

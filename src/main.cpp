@@ -58,7 +58,7 @@ int main () {
     }
 
     return 0;
-}
+};
 
 vector< Set<string> > sets_generation()
 {
@@ -82,7 +82,7 @@ vector< Set<string> > sets_generation()
     }
 
     return sets;
-}
+};
 
 vector< Set<string> > sets_input()
 {
@@ -99,4 +99,4 @@ vector< Set<string> > sets_input()
         sets.push_back(str);
     }
     return sets;
-}
+};
