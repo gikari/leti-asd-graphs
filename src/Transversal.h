@@ -24,6 +24,7 @@
 #include "Graph.h"
 #include <vector>
 #include <utility>
+#include <algorithm>
 #include <stdexcept>
 #include <iostream>
 
@@ -44,6 +45,7 @@ private:
     Graph<T> graph;
     Set<T> superset;
     std::vector<std::pair<T,T>> last_route;
+    std::vector<std::pair<T,T>> tmp_route;
     std::vector<std::pair<T,T>> bijection;
 
 public:
@@ -53,7 +55,7 @@ public:
     Transversal operator = (const Transversal&) = delete;
     Transversal operator = (Transversal&&) = delete;
 
-    Transversal (const std::vector< Set<T> >& sets) : graph{}, superset{}, last_route{}, bijection{} {
+    Transversal (const std::vector< Set<T> >& sets) : graph{}, superset{}, last_route{}, tmp_route{}, bijection{} {
         build_superset(sets);
 
         if (sets.size() > superset.power()) {
@@ -61,7 +63,7 @@ public:
         }
 
         build_graph(sets);
-        //show_graph();
+        show_graph();
 
         while (has_routes_left()) {
             try {
@@ -69,8 +71,9 @@ public:
             }
             catch (no_way_in_graph_error) {
                 graph.remove_edge(std::pair<T,T>{T{"BEGIN"}, T{last_route.back().second}});
+                //std::cout << "Defective element" << std::endl;
             }
-            //show_last_route();
+            show_last_route();
             change_direction_of_edges();
             remove_start_and_end();
         }
@@ -96,7 +99,7 @@ public:
         for (auto view : bijection) {
             std::cout << view.first << " -> " << view.second << ", ";
         }
-        std::cout << " }" << std::endl;
+        std::cout << "}" << std::endl;
     };
 
 private:
@@ -137,6 +140,7 @@ private:
 
     void build_some_route() {
         last_route.clear();
+        tmp_route.clear();
         auto start_edge = graph.get_edge_starting_with(T{"BEGIN"});
 
         build_route_from(start_edge);
@@ -153,10 +157,14 @@ private:
 
         auto possible_ways = graph.get_edges_starting_with(edge.second);
         for (auto way : possible_ways) {
-            auto has_reached_the_end = build_route_from(way);
-            if (has_reached_the_end ) {
-                last_route.push_back(way);
-                return true;
+            if (std::find(tmp_route.begin(), tmp_route.end(), way) == tmp_route.end()) {
+                tmp_route.push_back(way);
+                auto has_reached_the_end = build_route_from(way);
+                if (has_reached_the_end ) {
+                    last_route.push_back(way);
+                    return true;
+                }
+                tmp_route.pop_back();
             }
         }
         return false;

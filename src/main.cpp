@@ -57,10 +57,10 @@ int main()
 vector< Set<string> > sets_generation()
 {
     srand(time(NULL));
-    enum {MAX_NUMBER_OF_SETS = 10};
+    enum {MAX_NUMBER_OF_SETS = 5, MIN_NUMBER_OF_SETS = 3};
 
     std::vector< Set<string> > sets {};
-    int number_of_sets = rand() % MAX_NUMBER_OF_SETS + 1;
+    int number_of_sets = MIN_NUMBER_OF_SETS + rand() % (MAX_NUMBER_OF_SETS-MIN_NUMBER_OF_SETS + 1);
 
     static const string mask {
         "0123456789"
