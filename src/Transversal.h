@@ -39,6 +39,7 @@ private:
     Graph<T> graph;
     Set<T> superset;
     std::vector<std::pair<T,T>> last_route;
+    std::vector<std::pair<T,T>> bijection;
 
 public:
     Transversal() = delete;
@@ -47,7 +48,7 @@ public:
     Transversal operator = (const Transversal&) = delete;
     Transversal operator = (Transversal&&) = delete;
 
-    Transversal (const std::vector< Set<T> >& sets) : graph{}, superset{}, last_route{} {
+    Transversal (const std::vector< Set<T> >& sets) : graph{}, superset{}, last_route{}, bijection{} {
         build_superset(sets);
 
         if (sets.size() > superset.power()) {
@@ -55,24 +56,30 @@ public:
         }
 
         build_graph(sets);
+        //show_graph();
 
         while (has_routes_left()) {
             build_some_route();
             change_direction_of_edges();
+            remove_start_and_end();
         }
+
+        build_bijection();
     };
 
     ~Transversal() {};
 
     void show_common_set() {
+        std::cout << "Transversal Superset: " << std::endl;
         superset.show();
     };
 
     void show_graph() {
+        std::cout << "Transversal Graph: " << std::endl;
         graph.show();
     };
 
-    void get_result() {
+    void show_result() {
 
     };
 
@@ -92,7 +99,6 @@ private:
         for (auto element : superset.container) {
             graph.add_edge_from_to(T{"BEGIN"}, T{element});
         }
-
     };
 
     bool has_routes_left() const {
@@ -100,19 +106,19 @@ private:
     };
 
     void build_some_route() {
+        last_route.clear();
         auto start_edge = graph.get_edge_starting_with("BEGIN");
 
         build_route_from(start_edge);
         last_route.push_back(start_edge);
 
-        std::cout << "Reverse route: " << std::endl;
-        for (auto elem : last_route) {
-            std::cout << "[ " << elem.first << ", " << elem.second << " ]" << std::endl;
-        }
-
         if (last_route[0].second != "END")
             throw std::runtime_error{"Cannot build way in graph!"};
     };
+
+    void build_bijection() {
+        std::vector<std::pair<T,T>> {};
+    }
 
     bool build_route_from(std::pair<T,T> edge) {
         if ( edge.second == "END" ) {
@@ -131,14 +137,15 @@ private:
     };
 
     void change_direction_of_edges() {
-
+        for (auto edge : last_route) {
+            graph.change_edge_direction(edge);
+        }
     };
 
     void remove_start_and_end() {
-
+        graph.remove_edge(std::pair<T,T>{last_route.front().second, last_route.front().first});
+        graph.remove_edge(std::pair<T,T>{last_route.back().second, last_route.back().first});
     };
-
-
 
 };
 

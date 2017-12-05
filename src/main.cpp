@@ -44,10 +44,7 @@ int main () {
     try {
         Transversal <string> tr {sets};
 
-        cout << "Common set: " << endl;
         tr.show_common_set();
-
-        cout << "Graph: " << endl;
         tr.show_graph();
     }
     catch( wrong_input_error) {
@@ -86,8 +83,8 @@ vector< Set<string> > sets_generation()
 
 vector< Set<string> > sets_input()
 {
-    cout << "Choose number of sets: " << endl;
     size_t num {0};
+    cout << "Choose number of sets: ";
     cin >> num;
 
     std::vector< Set<string> > sets{};
