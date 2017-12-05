@@ -61,10 +61,15 @@ public:
         }
 
         build_graph(sets);
-        show_graph();
+        //show_graph();
 
         while (has_routes_left()) {
-            build_some_route();
+            try {
+                build_some_route();
+            }
+            catch (no_way_in_graph_error) {
+                graph.remove_edge(std::pair<T,T>{T{"BEGIN"}, T{last_route.back().second}});
+            }
             //show_last_route();
             change_direction_of_edges();
             remove_start_and_end();
