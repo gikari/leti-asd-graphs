@@ -56,7 +56,7 @@ public:
     };
 
     void show() const {
-        std::cout << *this << std::endl;
+        std::cout << *this;
     };
 
     bool has_edge_starting_with(T vertex) const {
@@ -77,7 +77,7 @@ public:
         return false;
     };
 
-    std::pair<T,T> get_edge_starting_with(T vertex) const {
+     std::pair<T,T> get_edge_starting_with(T vertex) const {
         for (auto element : edges) {
             if (element.first == vertex) {
                 return element;

@@ -22,34 +22,39 @@
 
 #include <string>
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 #include <list>
 
 template <typename T>
 class Set {
 private:
     std::list<T> container;
-
+    int init_id;
+    static int last_id;
 public:
-    Set():container{} {};
+    Set():container{}, init_id{++last_id} {};
 
-    Set(const std::string& str){
+    Set(const std::string& str): container{}, init_id{++last_id}{
         for (auto ch : str) {
             add_element(T{ch});
         }
     };
 
-    Set(const Set& another):container{another.container} {};
-    Set(Set&& another):container{another.container} {};
+    Set(const Set& another):container{another.container}, init_id{another.init_id} {};
+    Set(Set&& another):container{another.container}, init_id{another.init_id} {};
 
     Set& operator = (const Set& another) {
-        if (this != &another)
+        if (this != &another) {
             container = another.container;
+        }
         return *this;
     };
 
     Set& operator = (Set&& another) {
-        if (this != &another)
+        if (this != &another) {
             container = another.container;
+        }
         return *this;
     };
     ~Set() {};
@@ -77,12 +82,25 @@ public:
         std::cout << *this << std::endl;
     };
 
-    std::string to_str() {
-        std::string str{};
+    std::string get_unique_str_id() const {
+        std::string str{"ss"};
+        str += std::to_string(init_id);
+        str += "ss";
         for (auto elem : container)
-            str += elem;
+            str += std::string{elem};
         return str;
     };
+
+    int get_id() const {
+        return init_id;
+    }
+
+    std::string to_str() const {
+        std::string str{};
+        for (auto elem : container)
+            str += std::string{elem};
+        return str;
+    }
 
     int power() const {
         return container.size();
@@ -146,6 +164,7 @@ public:
     };
 
 };
-
+template <typename T>
+int Set<T>::last_id = 0;
 
 #endif

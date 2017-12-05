@@ -65,9 +65,7 @@ public:
 
         while (has_routes_left()) {
             build_some_route();
-
             //show_last_route();
-
             change_direction_of_edges();
             remove_start_and_end();
         }
@@ -111,9 +109,9 @@ private:
 
     void build_graph(const std::vector< Set<T> >& sets) {
         for (auto subset : sets) {
-            graph.add_edge_from_to(T{"ss" + subset.to_str()}, T{"END"});
+            graph.add_edge_from_to(T{subset.get_unique_str_id()}, T{"END"});
             for (auto element : subset.container) {
-                graph.add_edge_from_to(T{element}, T{"ss" + subset.to_str()});
+                graph.add_edge_from_to(T{element}, T{subset.get_unique_str_id()});
             }
         }
         for (auto element : superset.container) {
@@ -123,7 +121,7 @@ private:
 
     void build_bijection(const std::vector< Set<T> >& sets) {
         for (auto set : sets) {
-            auto edge = graph.get_edge_starting_with("ss" + set.to_str());
+            auto edge = graph.get_edge_starting_with(T{set.get_unique_str_id()});
             bijection.push_back(std::pair<T,T>{edge.second, set.to_str()});
         }
     };
@@ -134,7 +132,7 @@ private:
 
     void build_some_route() {
         last_route.clear();
-        auto start_edge = graph.get_edge_starting_with("BEGIN");
+        auto start_edge = graph.get_edge_starting_with(T{"BEGIN"});
 
         build_route_from(start_edge);
         last_route.push_back(start_edge);
