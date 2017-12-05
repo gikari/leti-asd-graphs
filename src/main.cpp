@@ -43,9 +43,9 @@ int main () {
 
     try {
         Transversal <string> tr {sets};
-
         tr.show_common_set();
         tr.show_graph();
+        tr.show_result();
     }
     catch( wrong_input_error) {
         cerr << "Impossible to build transversal with these input data!" << endl;

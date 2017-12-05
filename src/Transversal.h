@@ -64,7 +64,7 @@ public:
             remove_start_and_end();
         }
 
-        build_bijection();
+        build_bijection(sets);
     };
 
     ~Transversal() {};
@@ -80,7 +80,12 @@ public:
     };
 
     void show_result() {
-
+        std::cout << "Transversal: " << std::endl;
+        std::cout << "{ ";
+        for (auto view : bijection) {
+            std::cout << view.first << " -> " << view.second << ", ";
+        }
+        std::cout << " }" << std::endl;
     };
 
 private:
@@ -101,6 +106,18 @@ private:
         }
     };
 
+    void build_bijection(const std::vector< Set<T> >& sets) {
+        std::vector<std::pair<T,T>> edges{};
+        for (auto set : sets) {
+            auto edge_to_add = graph.get_edge_starting_with("ss" + set.to_str());
+            edges.push_back(edge_to_add);
+        }
+
+        for (auto edge : edges) {
+            bijection.push_back(std::pair<T,T>{edge.second, edge.first.substr(2)});
+        }
+    }
+
     bool has_routes_left() const {
         return graph.has_edge_ending_with("END");
     };
@@ -115,10 +132,6 @@ private:
         if (last_route[0].second != "END")
             throw std::runtime_error{"Cannot build way in graph!"};
     };
-
-    void build_bijection() {
-        std::vector<std::pair<T,T>> {};
-    }
 
     bool build_route_from(std::pair<T,T> edge) {
         if ( edge.second == "END" ) {
