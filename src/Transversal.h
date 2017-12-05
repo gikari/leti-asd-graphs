@@ -66,7 +66,7 @@ public:
         while (has_routes_left()) {
             build_some_route();
 
-            show_last_route();
+            //show_last_route();
 
             change_direction_of_edges();
             remove_start_and_end();
@@ -122,14 +122,9 @@ private:
     };
 
     void build_bijection(const std::vector< Set<T> >& sets) {
-        std::vector<std::pair<T,T>> edges{};
         for (auto set : sets) {
-            auto edge_to_add = graph.get_edge_starting_with("ss" + set.to_str());
-            edges.push_back(edge_to_add);
-        }
-
-        for (auto edge : edges) {
-            bijection.push_back(std::pair<T,T>{edge.second, edge.first.substr(2)});
+            auto edge = graph.get_edge_starting_with("ss" + set.to_str());
+            bijection.push_back(std::pair<T,T>{edge.second, set.to_str()});
         }
     };
 

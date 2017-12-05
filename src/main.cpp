@@ -51,7 +51,7 @@ int main () {
         cerr << "Impossible to build transversal with these input data!" << endl;
     }
     catch(no_way_in_graph_error) {
-        cerr << "Impossible to build graph! " << endl;
+        cerr << "Impossible to build graph! So, Transversal cannot be found!" << endl;
     }
     catch(runtime_error) {
         cerr << "Impossible to build transversal! Unknown error!" << endl;
