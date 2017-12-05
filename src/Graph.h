@@ -25,6 +25,11 @@
 #include <iostream>
 #include "Set.h"
 
+class vertex_not_found_error : public std::runtime_error {
+public:
+    using runtime_error::runtime_error;
+};
+
 template <typename T>
 class Graph {
 private:
@@ -63,13 +68,22 @@ public:
         return false;
     };
 
+    bool has_edge_ending_with(T vertex) const {
+        for (auto element : edges) {
+            if (element.second == vertex) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     std::pair<T,T> get_edge_starting_with(T vertex) const {
         for (auto element : edges) {
             if (element.first == vertex) {
                 return element;
             }
         }
-        throw std::runtime_error{"Edge with start vertex not found!"};
+        throw vertex_not_found_error{"Edge with start vertex not found!"};
     };
 
     std::pair<T,T> get_edge_ending_with(T vertex) const {
@@ -78,7 +92,7 @@ public:
                 return element;
             }
         }
-        throw std::runtime_error{"Edge with end vertex not found!"};
+        throw vertex_not_found_error{"Edge with end vertex not found!"};
     };
 
     std::vector<std::pair<T,T>> get_edges_starting_with(T vertex) const {
@@ -89,7 +103,7 @@ public:
             }
         }
         if (next_edges.empty())
-            throw std::runtime_error{"Edges with start vertex not found!"};
+            throw vertex_not_found_error{"Edges with start vertex not found!"};
         else
             return next_edges;
     };

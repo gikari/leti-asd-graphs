@@ -50,8 +50,8 @@ public:
     Transversal (const std::vector< Set<T> >& sets) : graph{}, superset{}, last_route{} {
         build_superset(sets);
 
-        if (sets.size() != superset.power()) {
-            throw wrong_input_error{"Transversal cannot be builded"};
+        if (sets.size() > superset.power()) {
+            throw wrong_input_error{"Transversal cannot be builded with current input"};
         }
 
         build_graph(sets);
@@ -96,7 +96,7 @@ private:
     };
 
     bool has_routes_left() const {
-        return graph.has_edge_starting_with("BEGIN");
+        return graph.has_edge_ending_with("END");
     };
 
     void build_some_route() {
@@ -109,7 +109,6 @@ private:
         for (auto elem : last_route) {
             std::cout << "[ " << elem.first << ", " << elem.second << " ]" << std::endl;
         }
-
 
         if (last_route[0].second != "END")
             throw std::runtime_error{"Cannot build way in graph!"};
