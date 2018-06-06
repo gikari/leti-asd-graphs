@@ -1,2 +1,3 @@
-# Course work
-Algorithms and Data Structures, Semester 3.
+**Not maintained** 
+
+Newer repository available at: https://gitlab.com/gikari/leti-asd-graphs
